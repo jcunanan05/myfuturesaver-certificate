@@ -36,7 +36,7 @@
     "format": "prettier --write \"src/**/*.js\"",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
-    "deploy": "npm run build && aws s3 --profile=smartsaver cp public/ s3://myfuturesaver.org --recursive"
+    "deploy": "netlify deploy --dir public --prod"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

@@ -1,37 +1,38 @@
 import React from 'react'
-import HomeLayout from './HomeLayout'
-import SEO from '../../components/Seo'
-import SmartSaverBanner from './SmartSaverBanner'
-import ClaimSection from './Claim'
-import ParticipateSection from './Participate'
-import ListOfFormsSection from './ListOfForms'
-import BmoSection from './Bmo'
-import WealthsimpleSection from './Wealthsimple'
-import NoSponsorshipSection from './NoSponorship'
-import SubmissionSurveyForm from './ListOfForms/SubmissionSurveyForm'
-import RespUploadSection from './RespUpload'
-import StepsToApplySection from './StepsToApply'
-import FaqSection from './Faq'
-import CertificateApp from '../certificate-app'
+import { Section } from './components'
+import CertificateForm from './components/CertificateForm'
+import Preview from './components/Preview'
+import AppContainer from './state/AppContainer'
+import CertificateFormContainer from './state/CertificateFormContainer'
+import content from './content'
 
-const IndexPage = () => {
+const CertForm = CertificateFormContainer(CertificateForm)
+
+const CertificateApp = ({
+  certificate,
+  updateCertificateValues,
+  sectionName = 'certificate',
+}) => {
+  const handleUpdatePreview = previewUrl => {
+    updateCertificateValues({ previewUrl })
+  }
+
   return (
-    <HomeLayout>
-      <SEO title="Home" keywords={[`resp`, `myfuturesaver`, `education`]} />
-      <SmartSaverBanner />
-      <ClaimSection />
-      <ParticipateSection />
-      <StepsToApplySection />
-      <ListOfFormsSection />
-      <BmoSection />
-      <WealthsimpleSection />
-      <NoSponsorshipSection />
-      <SubmissionSurveyForm />
-      <RespUploadSection />
-      <CertificateApp sectionName="certificate" />
-      <FaqSection />
-    </HomeLayout>
+    <Section name={sectionName}>
+      <h2 className="title">MyFutureSaver Certificate</h2>
+      <div className="columns">
+        <div className="column">
+          <CertForm onUpdatePreview={handleUpdatePreview} />
+        </div>
+        <div className="column">
+          <Preview
+            text={content.certificateInstructions}
+            url={certificate.previewUrl}
+          />
+        </div>
+      </div>
+    </Section>
   )
 }
 
-export default IndexPage
+export default AppContainer(CertificateApp)
